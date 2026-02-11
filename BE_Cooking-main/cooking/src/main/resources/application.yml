@@ -50,7 +50,7 @@ spring:
      chat: openai #groq và chatGPT
     #  chat: google-genai # gemini (Đang lỗi)
     openai:
-      api-key: ${GROQ_API_KEY}
+      api-key: ${GROQ_API_KEY:disabled}
       base-url: https://api.groq.com/openai
       chat:
         options:
@@ -67,7 +67,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/cooking_db
     username: root
-    password: 
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -114,7 +114,7 @@ app:
 
 
 pinecone:
-  api-key: ${PINECONE_API_KEY}
+  api-key: ${PINECONE_API_KEY:disabled}
   host: recipe001-jis24m5.svc.aped-4627-b74a.pinecone.io # Ví dụ: my-index-1234.svc.pinecone.io <-- THAY THẾ
   PINECONE_ENVIRONMENT: us-east-1
   index-name: recipe001 # Tên Index bạn muốn dùng <-- THAY THẾ

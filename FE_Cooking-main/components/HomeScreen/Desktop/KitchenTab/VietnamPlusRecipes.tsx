@@ -15,12 +15,10 @@ const CACHE_DURATION = 1000 * 60 * 500; // 500 phút
 const RSSAmThucGrid: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchArticles = async () => {
       setLoading(true);
-      setError(null);
 
       try {
         // Kiểm tra cache
@@ -35,15 +33,20 @@ const RSSAmThucGrid: React.FC = () => {
         }
         // Nếu không có cache hoặc cache hết hạn
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_DATA}/api/rss-amthuc`);
-        if (!res.ok) throw new Error('Không lấy được dữ liệu từ server');
+        if (!res.ok) {
+          console.warn('Không lấy được dữ liệu RSS từ server');
+          setArticles([]);
+          setLoading(false);
+          return;
+        }
         const data: Article[] = await res.json();
 
         setArticles(data);
         // Lưu vào cache
         localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data }));
       } catch (err: any) {
-        console.error(err);
-        setError(err.message || 'Có lỗi xảy ra');
+        console.warn('Lỗi khi fetch RSS:', err);
+        setArticles([]);
       } finally {
         setLoading(false);
       }
@@ -53,7 +56,7 @@ const RSSAmThucGrid: React.FC = () => {
   }, []);
 
   if (loading) return <p className="text-center py-8">Đang tải dữ liệu ẩm thực...</p>;
-  if (error) return <p className="text-center py-8 text-red-500">{error}</p>;
+  if (articles.length === 0) return null;
 
   return (
     <div className="py-12 px-4 sm:px-16">
