@@ -1,128 +1,131 @@
-# =====================================================
-# HƯỚNG DẪN CHẠY DỰ ÁN COOKPAD
-# =====================================================
+﻿# HUONG DAN CHAY DU AN COOKPAD
 
-## 📋 YÊU CẦU HỆ THỐNG
+## YEU CAU HE THONG
 
-### Bắt buộc:
-- **MySQL 8.0+** (đang chạy trên port 3306)
+### Bat buoc:
+- **MySQL 8.0+** (dang chay tren port 3306)
 - **Java 21** (JDK)
 - **Node.js 18+**
-- **pnpm** (package manager)
+- **npm** hoac **pnpm** (package manager)
 
-### Tùy chọn (cho AI features):
-- GROQ API Key (miễn phí tại https://console.groq.com)
-- Pinecone API Key (miễn phí tại https://www.pinecone.io)
+### Tuy chon (cho AI features):
+- GROQ API Key (mien phi tai https://console.groq.com)
 
 ---
 
-## 🚀 CÁC BƯỚC CHẠY DỰ ÁN
+## CAC BUOC CHAY DU AN
 
-### BƯỚC 1: Tạo Database MySQL
+### BUOC 1: Tao Database MySQL
 
-**Cách 1: Dùng MySQL Command Line**
+**Cach 1: Dung MySQL Command Line**
 ```bash
 mysql -u root -p
 ```
-Sau đó chạy:
+Sau do chay:
 ```sql
 CREATE DATABASE cooking_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-**Cách 2: Dùng MySQL Workbench**
-- Mở MySQL Workbench
-- Kết nối đến localhost
-- Chạy file `BE_Cooking-main/setup-database.sql`
-
-**Cách 3: Dùng script có sẵn**
-```bash
-mysql -u root -p < BE_Cooking-main/setup-database.sql
-```
+**Cach 2: Dung MySQL Workbench**
+- Mo MySQL Workbench
+- Ket noi den localhost
+- Chay file `BE_Cooking-main/setup-database.sql`
 
 ---
 
-### BƯỚC 2: Cấu hình Backend (nếu cần)
+### BUOC 2: Cau hinh Backend (neu can)
 
-Mở file `BE_Cooking-main/cooking/src/main/resources/application.yml`
+Mo file `BE_Cooking-main/cooking/src/main/resources/application.yml`
 
-Kiểm tra cấu hình database:
+Kiem tra cau hinh database:
 ```yaml
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/cooking_db
     username: root
-    password:           # ← Thêm password MySQL của bạn nếu có
-```
-
-**Nếu MySQL của bạn có password**, sửa dòng `password:` thành:
-```yaml
-    password: your_mysql_password
+    password: 123456    # Doi thanh password MySQL cua ban
 ```
 
 ---
 
-### BƯỚC 3: Chạy Backend (Spring Boot)
+### BUOC 3: Chay Backend (Spring Boot)
 
-Mở Terminal 1:
+Mo Terminal 1:
+
+**Tren Windows (dung Maven Wrapper - KHUYEN NGHI):**
+```powershell
+cd BE_Cooking-main/cooking
+.\mvnw.cmd spring-boot:run
+```
+
+**Tren macOS/Linux:**
+```bash
+cd BE_Cooking-main/cooking
+./mvnw spring-boot:run
+```
+
+**Neu da cai Maven toan cuc:**
 ```bash
 cd BE_Cooking-main/cooking
 mvn spring-boot:run
 ```
 
-**Lần đầu chạy:**
-- Maven sẽ tải dependencies (có thể mất vài phút)
-- Hibernate sẽ TỰ ĐỘNG tạo tất cả các bảng trong database
-- Tài khoản Admin mặc định sẽ được tạo:
+**Lan dau chay:**
+- Maven se tai dependencies (co the mat vai phut)
+- Hibernate se TU DONG tao tat ca cac bang trong database
+- Tai khoan Admin mac dinh se duoc tao:
   - Username: `admin`
   - Password: `admin12345`
 
-**Khi thấy dòng sau là thành công:**
+**Khi thay dong sau la thanh cong:**
 ```
 Started CookingApplication in X.XXX seconds
 ```
 
-**Kiểm tra:** Mở trình duyệt → http://localhost:8080/swagger-ui/index.html
+**Kiem tra:** Mo trinh duyet -> http://localhost:8080/swagger-ui/index.html
 
 ---
 
-### BƯỚC 4: Chạy Frontend (Next.js)
+### BUOC 4: Chay Frontend (Next.js)
 
-Mở Terminal 2 (giữ Terminal 1 đang chạy BE):
+Mo Terminal 2 (giu Terminal 1 dang chay BE):
 
+**Dung npm:**
 ```bash
 cd FE_Cooking-main
+npm install
+npm run dev
+```
 
-# Cài đặt pnpm nếu chưa có
+**Hoac dung pnpm:**
+```bash
+cd FE_Cooking-main
 npm install -g pnpm
-
-# Cài đặt dependencies
 pnpm install
-
-# Chạy development server
 pnpm dev
 ```
 
-**Khi thấy dòng sau là thành công:**
+**Khi thay dong sau la thanh cong:**
 ```
-▲ Next.js 16.x.x
+Next.js 16.x.x
 - Local: http://localhost:3000
 ```
 
-**Mở trình duyệt:** http://localhost:3000
+**Mo trinh duyet:** http://localhost:3000
 
 ---
 
-## ✅ KIỂM TRA HỆ THỐNG
+## KIEM TRA HE THONG
 
-| Thành phần | URL | Trạng thái |
+| Thanh phan | URL | Trang thai |
 |------------|-----|------------|
-| Frontend | http://localhost:3000 | Giao diện web |
+| Frontend | http://localhost:3000 | Giao dien web |
 | Backend API | http://localhost:8080 | API Server |
 | Swagger Docs | http://localhost:8080/swagger-ui/index.html | API Documentation |
 
 ---
 
-## 🔐 TÀI KHOẢN MẶC ĐỊNH
+## TAI KHOAN MAC DINH
 
 | Role | Username | Password |
 |------|----------|----------|
@@ -130,53 +133,53 @@ pnpm dev
 
 ---
 
-## ⚠️ XỬ LÝ LỖI THƯỜNG GẶP
+## XU LY LOI THUONG GAP
 
-### 1. Lỗi "Communications link failure" (MySQL không kết nối được)
-- Kiểm tra MySQL đang chạy: `mysql -u root -p`
-- Kiểm tra port 3306 không bị chặn
+### 1. Loi "'mvn' is not recognized" (Windows)
+- **Giai phap:** Dung Maven Wrapper: `.\mvnw.cmd spring-boot:run`
 
-### 2. Lỗi "Access denied for user 'root'"
-- Sửa password trong `application.yml`
+### 2. Loi "Communications link failure" (MySQL khong ket noi duoc)
+- Kiem tra MySQL dang chay: `mysql -u root -p`
+- Kiem tra port 3306 khong bi chan
 
-### 3. Lỗi "Unknown database 'cooking_db'"
-- Chạy lại Bước 1 để tạo database
+### 3. Loi "Access denied for user 'root'"
+- Sua password trong `application.yml` cho dung voi MySQL cua ban
 
-### 4. Lỗi "NEXT_PUBLIC_API_HOST is undefined"
-- Kiểm tra file `.env.local` trong thư mục `FE_Cooking-main`
-- Restart frontend: `pnpm dev`
+### 4. Loi "Unknown database 'cooking_db'"
+- Chay lai Buoc 1 de tao database
 
-### 5. Lỗi Maven "JAVA_HOME not set"
-- Cài đặt Java 21 JDK
-- Thiết lập biến môi trường JAVA_HOME
-
----
-
-## 📁 CẤU TRÚC DỰ ÁN
-
-```
-Website chia sẻ công thức nấu ăn/
-├── BE_Cooking-main/          # Backend (Java Spring Boot)
-│   ├── cooking/              # Source code chính
-│   │   ├── src/
-│   │   └── pom.xml           # Maven config
-│   └── setup-database.sql    # Script tạo database
-│
-├── FE_Cooking-main/          # Frontend (Next.js)
-│   ├── app/                  # Pages & routes
-│   ├── components/           # React components
-│   ├── .env.local            # Environment config
-│   └── package.json          # Dependencies
-│
-└── README.md                 # Mô tả dự án
-```
+### 5. Loi Maven "JAVA_HOME not set"
+- Cai dat Java 21 JDK
+- Thiet lap bien moi truong JAVA_HOME
 
 ---
 
-## 🎉 HOÀN THÀNH!
+## CAU TRUC DU AN
 
-Sau khi chạy cả BE và FE, bạn có thể:
-- Đăng ký tài khoản mới
-- Đăng nhập với tài khoản admin
-- Tạo và xem công thức nấu ăn
-- Sử dụng các tính năng khác của hệ thống
+```
+source_code/
+|-- BE_Cooking-main/          # Backend (Java Spring Boot 3.5.6)
+|   |-- cooking/              # Source code chinh
+|   |   |-- src/
+|   |   |-- mvnw.cmd          # Maven Wrapper (Windows)
+|   |   |-- mvnw              # Maven Wrapper (Unix)
+|   |   +-- pom.xml           # Maven config (Java 21)
+|   +-- setup-database.sql    # Script tao database
+|
+|-- FE_Cooking-main/          # Frontend (Next.js 16)
+|   |-- app/                  # Pages & routes
+|   |-- components/           # React components
+|   +-- package.json          # Dependencies
+|
++-- README.md                 # Mo ta du an
+```
+
+---
+
+## HOAN THANH!
+
+Sau khi chay ca BE va FE, ban co the:
+- Dang ky tai khoan moi
+- Dang nhap voi tai khoan admin
+- Tao va xem cong thuc nau an
+- Su dung cac tinh nang khac cua he thong

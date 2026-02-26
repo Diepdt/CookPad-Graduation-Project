@@ -1,112 +1,124 @@
-CookPad - Nền tảng Chia sẻ Công thức Nấu ăn & Gợi ý AI
-CookPad là hệ thống đa nền tảng (Web & Mobile App) cho phép người dùng chia sẻ công thức nấu ăn, kết nối cộng đồng yêu bếp, và đặc biệt hỗ trợ gợi ý món ăn thông minh dựa trên nguyên liệu có sẵn sử dụng công nghệ AI (RAG).
+﻿# CookPad - Nen tang Chia se Cong thuc Nau an & Goi y AI
 
-🚀 Công nghệ sử dụng (Tech Stack)
-Dự án được xây dựng theo mô hình Client-Server với các công nghệ hiện đại:
+CookPad la he thong da nen tang (Web & Mobile App) cho phep nguoi dung chia se cong thuc nau an, ket noi cong dong yeu bep, va dac biet ho tro goi y mon an thong minh dua tren nguyen lieu co san su dung cong nghe AI (RAG).
 
-Backend (Server):
+---
 
-Java Spring Boot (Core Framework)
+## Cong nghe su dung (Tech Stack)
 
-Spring AI (Tích hợp AI)
+Du an duoc xay dung theo mo hinh Client-Server voi cac cong nghe hien dai:
 
-MySQL (Database)
+### Backend (Server):
+- **Java Spring Boot 3.5.6** (Core Framework)
+- **Spring AI** (Tich hop AI)
+- **MySQL 8.0** (Database)
+- **GROQ API** (LLM cho AI Chat)
+- **VNPay / Momo** (Cong thanh toan)
+- **JWT** (Xac thuc bao mat)
 
-Pinecone (Vector Database cho RAG/AI Search)
+### Frontend (Website):
+- **Next.js 16** (React Framework)
+- **TypeScript**
+- **Tailwind CSS** (Styling)
+- **Zustand** (State Management)
+- **TanStack Query** (Data fetching)
 
-VNPay / Momo (Cổng thanh toán)
+---
 
-JWT (Xác thực bảo mật)
+## Cac Actor (Tac nhan) trong he thong
 
-Frontend (Website):
+He thong duoc thiet ke voi 3 nhom nguoi dung chinh:
 
-Next.js 16 (React Framework)
+### 1. Nguoi dung thuong (User / Foodie)
+La nguoi tham gia nen tang de tim kiem cam hung nau an hoac dat mon.
 
-TypeScript
+- Tim kiem cong thuc (theo ten, nguyen lieu, tag).
+- Su dung AI: Chatbot hoi dap, goi y mon an tu hinh anh hoac danh sach nguyen lieu.
+- Tuong tac: Like, Comment, Luu cong thuc vao bo suu tap (Collection).
+- Theo doi (Follow) cac dau bep khac.
+- Dat mua mon an (Order) tu cac dau bep ban hang.
 
-Tailwind CSS (Styling)
+### 2. Dau bep (Chef / Seller)
+La nguoi dung da thuc hien nang cap tai khoan (Upgrade Package) de mo khoa tinh nang chia se va kinh doanh.
 
-Zustand (State Management)
+- Toan bo quyen cua User.
+- Dang tai va quan ly cong thuc nau an (Recipe).
+- Tao mon an (Dish) de ban dua tren cong thuc.
+- Quan ly gian hang, quan ly don hang (Order Management).
+- Quan ly vi tien (Seller Wallet) va rut tien doanh thu.
 
-Mobile App:
+### 3. Quan tri vien (Admin)
+Nguoi van hanh he thong.
 
-React Native (Expo)
+- Quan ly nguoi dung (User/Chef).
+- Duyet yeu cau nang cap len Dau bep (Chef Request).
+- Quan ly noi dung (Cong thuc, Bai dang) de dam bao tieu chuan cong dong.
+- Xem thong ke he thong (Doanh thu, luong truy cap).
 
-Expo Router
+---
 
-👥 Các Actor (Tác nhân) trong hệ thống
-Hệ thống được thiết kế với 3 nhóm người dùng chính, mỗi nhóm có quyền hạn và chức năng riêng biệt:
+## Cac nghiep vu chinh (Business Processes)
 
-1. Người dùng thường (User / Foodie)
-Là người tham gia nền tảng để tìm kiếm cảm hứng nấu ăn hoặc đặt món.
+### 1. Nghiep vu Cong thuc & Cong dong (Core Features)
+- **Quan ly cong thuc (CRUD):** Dau bep co the tao cong thuc voi chi tiet tung buoc (Step), nguyen lieu (Ingredients), hinh anh/video minh hoa.
+- **Tuong tac xa hoi:** Nguoi dung co the tha tim, binh luan, va theo doi (Follow) nguoi tao noi dung. He thong co co che thong bao (Notification) khi co tuong tac moi.
+- **Bo suu tap (Collection):** Nguoi dung tao cac bo suu tap ca nhan (vi du: `Mon an sang`, `Mon chay`) de luu tru cong thuc yeu thich.
 
-Tìm kiếm công thức (theo tên, nguyên liệu, tag).
+### 2. Nghiep vu Goi y thong minh (AI Features)
+- **Search by Ingredients (RAG):** Nguoi dung nhap danh sach nguyen lieu dang co trong tu lanh -> He thong su dung Vector Search ket hop Spring AI de goi y cac mon an phu hop nhat.
+- **Food Chatbot:** Tro ly ao tra loi cac cau hoi ve dinh duong, cach nau an.
+- **Image Recognition:** Nguoi dung chup anh nguyen lieu -> AI nhan dien va de xuat cong thuc.
 
-Sử dụng AI: Chatbot hỏi đáp, gợi ý món ăn từ hình ảnh hoặc danh sách nguyên liệu.
+### 3. Nghiep vu Thuong mai dien tu (E-commerce)
+- **Nau ho (Ordering):** Nguoi dung co the dat mon an truc tiep tu Dau bep (neu Dau bep co mo ban mon do).
+- **Gio hang & Thanh toan:**
+  - Them mon vao gio hang.
+  - Thanh toan tich hop cong VNPay hoac Momo.
+  - Quy trinh don hang: Dat hang -> Cho xac nhan -> Dang nau -> Dang giao -> Hoan thanh.
 
-Tương tác: Like, Comment, Lưu công thức vào bộ sưu tập (Collection).
+### 4. Nghiep vu Tai chinh & Nang cap
+- **Nang cap tai khoan:** Nguoi dung mua goi Premium/Chef de mo khoa tinh nang dang bai va ban hang.
+- **Vi dien tu (Wallet):**
+  - Quan ly dong tien vao (tu don hang ban duoc).
+  - Yeu cau rut tien (Withdraw Request) ve tai khoan ngan hang.
 
-Theo dõi (Follow) các đầu bếp khác.
+---
 
-Đặt mua món ăn (Order) từ các đầu bếp bán hàng.
+## Cau truc du an
 
-2. Đầu bếp (Chef / Seller)
-Là người dùng đã thực hiện nâng cấp tài khoản (Upgrade Package) để mở khóa tính năng chia sẻ và kinh doanh.
+```
+source_code/
+|-- BE_Cooking-main/          # Backend (Java Spring Boot 3.5.6)
+|   |-- cooking/
+|   |   |-- src/main/java/    # Source code chinh
+|   |   |-- mvnw.cmd          # Maven Wrapper (Windows)
+|   |   +-- pom.xml           # Maven config (Java 21)
+|   +-- setup-database.sql    # Script tao database
+|
+|-- FE_Cooking-main/          # Frontend (Next.js 16)
+|   |-- app/                  # Pages & routes
+|   |-- components/           # React components
+|   |-- api/                  # API clients
+|   +-- package.json          # Dependencies
+|
++-- HUONG_DAN_CHAY_DU_AN.md   # Huong dan chay du an
+```
 
-Toàn bộ quyền của User.
+---
 
-Đăng tải và quản lý công thức nấu ăn (Recipe).
+## Huong dan chay du an
 
-Tạo món ăn (Dish) để bán dựa trên công thức.
+Xem chi tiet tai file [HUONG_DAN_CHAY_DU_AN.md](HUONG_DAN_CHAY_DU_AN.md)
 
-Quản lý gian hàng, quản lý đơn hàng (Order Management).
+### Tong quan:
+1. Tao database MySQL: `cooking_db`
+2. Chay Backend: `cd BE_Cooking-main/cooking && .\mvnw.cmd spring-boot:run`
+3. Chay Frontend: `cd FE_Cooking-main && npm install && npm run dev`
 
-Quản lý ví tiền (Seller Wallet) và rút tiền doanh thu.
+### URLs:
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8080
+- Swagger Docs: http://localhost:8080/swagger-ui/index.html
 
-3. Quản trị viên (Admin)
-Người vận hành hệ thống.
-
-Quản lý người dùng (User/Chef).
-
-Duyệt yêu cầu nâng cấp lên Đầu bếp (Chef Request).
-
-Quản lý nội dung (Công thức, Bài đăng) để đảm bảo tiêu chuẩn cộng đồng.
-
-Xem thống kê hệ thống (Doanh thu, lượng truy cập).
-
-💼 Các nghiệp vụ chính (Business Processes)
-Dưới đây là mô tả chi tiết các luồng nghiệp vụ quan trọng trong dự án:
-
-1. Nghiệp vụ Công thức & Cộng đồng (Core Features)
-Quản lý công thức (CRUD): Đầu bếp có thể tạo công thức với chi tiết từng bước (Step), nguyên liệu (Ingredients), hình ảnh/video minh họa.
-
-Tương tác xã hội: Người dùng có thể thả tim, bình luận, và theo dõi (Follow) người tạo nội dung. Hệ thống có cơ chế thông báo (Notification) khi có tương tác mới.
-
-Bộ sưu tập (Collection): Người dùng tạo các bộ sưu tập cá nhân (ví dụ: "Món ăn sáng", "Món chay") để lưu trữ công thức yêu thích.
-
-2. Nghiệp vụ Gợi ý thông minh (AI Features)
-Search by Ingredients (RAG): Người dùng nhập danh sách nguyên liệu đang có trong tủ lạnh -> Hệ thống sử dụng Vector Search (Pinecone) kết hợp Spring AI để gợi ý các món ăn phù hợp nhất.
-
-Food Chatbot: Trợ lý ảo trả lời các câu hỏi về dinh dưỡng, cách nấu ăn.
-
-Image Recognition: Người dùng chụp ảnh nguyên liệu -> AI nhận diện và đề xuất công thức.
-
-3. Nghiệp vụ Thương mại điện tử (E-commerce)
-Nấu hộ (Ordering): Người dùng có thể đặt món ăn trực tiếp từ Đầu bếp (nếu Đầu bếp có mở bán món đó).
-
-Giỏ hàng & Thanh toán:
-
-Thêm món vào giỏ hàng.
-
-Thanh toán tích hợp cổng VNPay hoặc Momo.
-
-Quy trình đơn hàng: Đặt hàng -> Chờ xác nhận -> Đang nấu -> Đang giao -> Hoàn thành.
-
-4. Nghiệp vụ Tài chính & Nâng cấp
-Nâng cấp tài khoản: Người dùng mua gói Premium/Chef để mở khóa tính năng đăng bài và bán hàng.
-
-Ví điện tử (Wallet):
-
-Quản lý dòng tiền vào (từ đơn hàng bán được).
-
-Yêu cầu rút tiền (Withdraw Request) về tài khoản ngân hàng.
+### Tai khoan mac dinh:
+- Admin: `admin` / `admin12345`
